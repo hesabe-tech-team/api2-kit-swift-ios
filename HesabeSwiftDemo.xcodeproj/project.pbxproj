@@ -1,0 +1,449 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		328D600C2430AFC7009DA591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D600B2430AFC7009DA591 /* AppDelegate.swift */; };
+		328D600E2430AFC7009DA591 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D600D2430AFC7009DA591 /* SceneDelegate.swift */; };
+		328D60102430AFC7009DA591 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D600F2430AFC7009DA591 /* ViewController.swift */; };
+		328D60132430AFC7009DA591 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 328D60112430AFC7009DA591 /* Main.storyboard */; };
+		328D60152430AFD2009DA591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 328D60142430AFD2009DA591 /* Assets.xcassets */; };
+		328D60182430AFD2009DA591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 328D60162430AFD2009DA591 /* LaunchScreen.storyboard */; };
+		328D60222430C89F009DA591 /* HesabeGatewayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D60212430C89F009DA591 /* HesabeGatewayVC.swift */; };
+		328D60272430EA9D009DA591 /* HesabeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D60262430EA9D009DA591 /* HesabeModels.swift */; };
+		328D60292430EAE3009DA591 /* HesabeCrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D60282430EAE3009DA591 /* HesabeCrypt.swift */; };
+		B55C3AF7A6848C5AE5917C81 /* Pods_HesabeSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2461A5524DDE88ABD99C7 /* Pods_HesabeSwiftDemo.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		328D60082430AFC7009DA591 /* HesabeSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HesabeSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		328D600B2430AFC7009DA591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		328D600D2430AFC7009DA591 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		328D600F2430AFC7009DA591 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		328D60122430AFC7009DA591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		328D60142430AFD2009DA591 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		328D60172430AFD2009DA591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		328D60192430AFD2009DA591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		328D60212430C89F009DA591 /* HesabeGatewayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HesabeGatewayVC.swift; sourceTree = "<group>"; };
+		328D60262430EA9D009DA591 /* HesabeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HesabeModels.swift; sourceTree = "<group>"; };
+		328D60282430EAE3009DA591 /* HesabeCrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HesabeCrypt.swift; sourceTree = "<group>"; };
+		3A4055B09D4CD552D3C27D8A /* Pods-HesabeSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HesabeSwiftDemo.debug.xcconfig"; path = "Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		47F2461A5524DDE88ABD99C7 /* Pods_HesabeSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HesabeSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A07A0C8F4C211F3FA26D3C15 /* Pods-HesabeSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HesabeSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		328D60052430AFC7009DA591 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B55C3AF7A6848C5AE5917C81 /* Pods_HesabeSwiftDemo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0B7A49AD0A628E022C3C3370 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47F2461A5524DDE88ABD99C7 /* Pods_HesabeSwiftDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		328D5FFF2430AFC7009DA591 = {
+			isa = PBXGroup;
+			children = (
+				328D600A2430AFC7009DA591 /* HesabeSwiftDemo */,
+				328D60092430AFC7009DA591 /* Products */,
+				85826C073EF1C4053B6193E5 /* Pods */,
+				0B7A49AD0A628E022C3C3370 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		328D60092430AFC7009DA591 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				328D60082430AFC7009DA591 /* HesabeSwiftDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		328D600A2430AFC7009DA591 /* HesabeSwiftDemo */ = {
+			isa = PBXGroup;
+			children = (
+				328D60252430EA63009DA591 /* HelpersAndModels */,
+				328D60242430EA3F009DA591 /* Controller */,
+				328D60232430EA22009DA591 /* SupportFiles */,
+				328D60112430AFC7009DA591 /* Main.storyboard */,
+				328D60142430AFD2009DA591 /* Assets.xcassets */,
+				328D60162430AFD2009DA591 /* LaunchScreen.storyboard */,
+				328D60192430AFD2009DA591 /* Info.plist */,
+			);
+			path = HesabeSwiftDemo;
+			sourceTree = "<group>";
+		};
+		328D60232430EA22009DA591 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				328D600B2430AFC7009DA591 /* AppDelegate.swift */,
+				328D600D2430AFC7009DA591 /* SceneDelegate.swift */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		328D60242430EA3F009DA591 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				328D600F2430AFC7009DA591 /* ViewController.swift */,
+				328D60212430C89F009DA591 /* HesabeGatewayVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		328D60252430EA63009DA591 /* HelpersAndModels */ = {
+			isa = PBXGroup;
+			children = (
+				328D60262430EA9D009DA591 /* HesabeModels.swift */,
+				328D60282430EAE3009DA591 /* HesabeCrypt.swift */,
+			);
+			path = HelpersAndModels;
+			sourceTree = "<group>";
+		};
+		85826C073EF1C4053B6193E5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3A4055B09D4CD552D3C27D8A /* Pods-HesabeSwiftDemo.debug.xcconfig */,
+				A07A0C8F4C211F3FA26D3C15 /* Pods-HesabeSwiftDemo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		328D60072430AFC7009DA591 /* HesabeSwiftDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 328D601C2430AFD2009DA591 /* Build configuration list for PBXNativeTarget "HesabeSwiftDemo" */;
+			buildPhases = (
+				71550FF833401B6BB194A368 /* [CP] Check Pods Manifest.lock */,
+				328D60042430AFC7009DA591 /* Sources */,
+				328D60052430AFC7009DA591 /* Frameworks */,
+				328D60062430AFC7009DA591 /* Resources */,
+				6DF59FE81CFB9BB53CDBB7F9 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HesabeSwiftDemo;
+			productName = HesabeSwiftDemo;
+			productReference = 328D60082430AFC7009DA591 /* HesabeSwiftDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		328D60002430AFC7009DA591 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = "Mohammed Salman";
+				TargetAttributes = {
+					328D60072430AFC7009DA591 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 328D60032430AFC7009DA591 /* Build configuration list for PBXProject "HesabeSwiftDemo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 328D5FFF2430AFC7009DA591;
+			productRefGroup = 328D60092430AFC7009DA591 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				328D60072430AFC7009DA591 /* HesabeSwiftDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		328D60062430AFC7009DA591 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328D60182430AFD2009DA591 /* LaunchScreen.storyboard in Resources */,
+				328D60152430AFD2009DA591 /* Assets.xcassets in Resources */,
+				328D60132430AFC7009DA591 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6DF59FE81CFB9BB53CDBB7F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		71550FF833401B6BB194A368 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HesabeSwiftDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		328D60042430AFC7009DA591 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328D60222430C89F009DA591 /* HesabeGatewayVC.swift in Sources */,
+				328D60102430AFC7009DA591 /* ViewController.swift in Sources */,
+				328D600C2430AFC7009DA591 /* AppDelegate.swift in Sources */,
+				328D60292430EAE3009DA591 /* HesabeCrypt.swift in Sources */,
+				328D600E2430AFC7009DA591 /* SceneDelegate.swift in Sources */,
+				328D60272430EA9D009DA591 /* HesabeModels.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		328D60112430AFC7009DA591 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				328D60122430AFC7009DA591 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		328D60162430AFD2009DA591 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				328D60172430AFD2009DA591 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		328D601A2430AFD2009DA591 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		328D601B2430AFD2009DA591 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		328D601D2430AFD2009DA591 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A4055B09D4CD552D3C27D8A /* Pods-HesabeSwiftDemo.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62M4VPTR97;
+				INFOPLIST_FILE = HesabeSwiftDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.ursource.HesabeSwiftDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		328D601E2430AFD2009DA591 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A07A0C8F4C211F3FA26D3C15 /* Pods-HesabeSwiftDemo.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62M4VPTR97;
+				INFOPLIST_FILE = HesabeSwiftDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.ursource.HesabeSwiftDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		328D60032430AFC7009DA591 /* Build configuration list for PBXProject "HesabeSwiftDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				328D601A2430AFD2009DA591 /* Debug */,
+				328D601B2430AFD2009DA591 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		328D601C2430AFD2009DA591 /* Build configuration list for PBXNativeTarget "HesabeSwiftDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				328D601D2430AFD2009DA591 /* Debug */,
+				328D601E2430AFD2009DA591 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 328D60002430AFC7009DA591 /* Project object */;
+}
