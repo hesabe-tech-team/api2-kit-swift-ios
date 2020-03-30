@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct PaymentData: Codable {
+struct PaymentRequest: Codable {
     
     private var merchantCode:String
     var amount:String = "0"

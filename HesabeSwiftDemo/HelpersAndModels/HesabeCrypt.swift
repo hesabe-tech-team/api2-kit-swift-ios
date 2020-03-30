@@ -45,7 +45,7 @@ struct HesabeCrypt {
     }
     
     /// AES Decryption Method using `CryptoSwift` dependency.
-    func decryptedResponse(data: String) -> String? {
+    func decrypt(data: String) -> String? {
         guard let key = String(data: self.key, encoding: .utf8), let iv = String(data: self.iv, encoding: .utf8) else { return nil }
         let aes = try? AES(key: key, iv: iv)
         let byteArray = Array<UInt8>(hex: data)

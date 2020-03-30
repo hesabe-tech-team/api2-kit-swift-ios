@@ -19,22 +19,23 @@ class ViewController: UIViewController {
     
     @IBAction func payClick(_ sender: UIButton) {
         statusLabel.text = ""
-        let vc = HesabeGatewayVC()
-        var paymentData = PaymentData(code: "1351719857300",
+        var paymentRequest = PaymentRequest(code: "1351719857300",
                                       responseUrl: "http://api.hesbstaging.com",
                                       failureUrl: "http://api.hesbstaging.com")
-        paymentData?.amount = "7.5"
-        vc.paymentData = paymentData
-        vc.modalPresentationStyle = .fullScreen
+        paymentRequest?.amount = "7.5"
+        self.presentHesabeGateway(paymentRequest: paymentRequest!)
+    }
+    
+    func presentHesabeGateway(paymentRequest: PaymentRequest) {
+        let vc = HesabeGatewayVC()
+        vc.paymentRequest = paymentRequest
+        vc.modalPresentationStyle = .overFullScreen // to avoid dafault popover presentation
         vc.delegate = self
-        present(vc, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
-}
-
-extension ViewController: HesabeGatewayVCDelegate {
-    
-    func updatePaymentStaus(data: PaymentResponse) {
-        statusLabel.text = data.response.resultCode
+    func hesabeResponse(paymentResponse: PaymentResponse) {
+        statusLabel.text = paymentResponse.response.resultCode
     }
+    
 }
