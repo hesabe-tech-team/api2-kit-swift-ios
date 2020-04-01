@@ -131,20 +131,20 @@ extension HesabeGatewayVC: WKNavigationDelegate, WKUIDelegate {
     func paymentResponse(response encryptedResponse: String) {
         let decryptedResponse = AES?.decrypt(data: encryptedResponse)
         guard let responseJson = decryptedResponse?.data(using: .utf8) else { return }
-        let paymentRespone = (try? JSONDecoder().decode(PaymentResponse.self, from: responseJson))!
+        let paymentResponse = (try? JSONDecoder().decode(PaymentResponse.self, from: responseJson))!
         self.dismiss(animated: true) {
-            self.delegate?.paymentRespone(response: paymentRespone)
+            self.delegate?.paymentResponse(response: paymentResponse)
         }
     }
 }
 
 // MARK: - Protocol and Delegate
 protocol HesabeGatewayVCDelegate: class {
-    func paymentRespone(response: PaymentResponse)
+    func paymentResponse(response: PaymentResponse)
 }
 
 extension ViewController: HesabeGatewayVCDelegate {
-    func paymentRespone(response paymentResponse: PaymentResponse) {
+    func paymentResponse(response paymentResponse: PaymentResponse) {
         self.hesabeResponse(paymentResponse: paymentResponse)
     }
 }
