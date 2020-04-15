@@ -19,10 +19,8 @@ class ViewController: UIViewController {
     
     @IBAction func payClick(_ sender: UIButton) {
         statusLabel.text = ""
-        var paymentRequest = PaymentRequest(code: "1351719857300",
-                                      responseUrl: "http://api.hesbstaging.com",
-                                      failureUrl: "http://api.hesbstaging.com")
-        paymentRequest?.amount = "7.5"
+        var paymentRequest = PaymentRequest(amount: "1")
+        paymentRequest?.orderReferenceNumber = "12XXXXXX" // optional
         self.presentHesabeGateway(paymentRequest: paymentRequest!)
     }
     
@@ -35,7 +33,8 @@ class ViewController: UIViewController {
     }
     
     func hesabeResponse(paymentResponse: PaymentResponse) {
-        statusLabel.text = paymentResponse.response.resultCode
+        let data = paymentResponse.response
+        statusLabel.text = data.resultCode + " - #" + data.orderReferenceNumber!
     }
     
 }

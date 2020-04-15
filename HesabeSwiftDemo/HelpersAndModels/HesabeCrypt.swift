@@ -18,13 +18,13 @@ struct HesabeCrypt {
 
 
     // MARK: - Initialzier
-    init?(key: String, iv: String) {
-        guard let keyData = key.data(using: .utf8) else {
+    init?() {
+        guard let keyData = MERCHANT_KEY.data(using: .utf8) else {
             debugPrint("Error: Failed to set a key.")
             return nil
         }
 
-        guard let ivData = iv.data(using: .utf8) else {
+        guard let ivData = MERCHANT_IV.data(using: .utf8) else {
             debugPrint("Error: Failed to set an initial vector.")
             return nil
         }

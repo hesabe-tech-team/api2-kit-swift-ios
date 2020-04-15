@@ -16,6 +16,7 @@
 		328D60222430C89F009DA591 /* HesabeGatewayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D60212430C89F009DA591 /* HesabeGatewayVC.swift */; };
 		328D60272430EA9D009DA591 /* HesabeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D60262430EA9D009DA591 /* HesabeModels.swift */; };
 		328D60292430EAE3009DA591 /* HesabeCrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 328D60282430EAE3009DA591 /* HesabeCrypt.swift */; };
+		32C8E6742446FF7A003AF7DD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C8E6732446FF7A003AF7DD /* Constants.swift */; };
 		B55C3AF7A6848C5AE5917C81 /* Pods_HesabeSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2461A5524DDE88ABD99C7 /* Pods_HesabeSwiftDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,7 @@
 		328D60212430C89F009DA591 /* HesabeGatewayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HesabeGatewayVC.swift; sourceTree = "<group>"; };
 		328D60262430EA9D009DA591 /* HesabeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HesabeModels.swift; sourceTree = "<group>"; };
 		328D60282430EAE3009DA591 /* HesabeCrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HesabeCrypt.swift; sourceTree = "<group>"; };
+		32C8E6732446FF7A003AF7DD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3A4055B09D4CD552D3C27D8A /* Pods-HesabeSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HesabeSwiftDemo.debug.xcconfig"; path = "Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		47F2461A5524DDE88ABD99C7 /* Pods_HesabeSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HesabeSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A0C8F4C211F3FA26D3C15 /* Pods-HesabeSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HesabeSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-HesabeSwiftDemo/Pods-HesabeSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				328D60262430EA9D009DA591 /* HesabeModels.swift */,
 				328D60282430EAE3009DA591 /* HesabeCrypt.swift */,
+				32C8E6732446FF7A003AF7DD /* Constants.swift */,
 			);
 			path = HelpersAndModels;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				328D60102430AFC7009DA591 /* ViewController.swift in Sources */,
 				328D600C2430AFC7009DA591 /* AppDelegate.swift in Sources */,
 				328D60292430EAE3009DA591 /* HesabeCrypt.swift in Sources */,
+				32C8E6742446FF7A003AF7DD /* Constants.swift in Sources */,
 				328D600E2430AFC7009DA591 /* SceneDelegate.swift in Sources */,
 				328D60272430EA9D009DA591 /* HesabeModels.swift in Sources */,
 			);

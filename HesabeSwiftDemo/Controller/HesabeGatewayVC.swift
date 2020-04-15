@@ -13,31 +13,10 @@ import Alamofire
 class HesabeGatewayVC: UIViewController {
     
     weak var delegate: HesabeGatewayVCDelegate?
-    
-    /// The base URL used for Payment Gateway
-    let hesabeURL = "http://api.hesbstck.com";
-    
-    /// The header  to pass while accessing payment token
-    let accessCode = "2a3789f5-edd1-416d-a472-4357794d6a8c"
-    let merchantKey = "OGzgrmqyDEnlALQRNvzPv8NJ4BwWM019"
-    let merchantIV = "DEnlALQRNvzPv8NJ"
+    private var AES = HesabeCrypt()
     
     private var headers: HTTPHeaders {
-        return ["accessCode": self.accessCode]
-    }
-    
-    private var AES: HesabeCrypt! {
-        return HesabeCrypt(key: self.merchantKey, iv: self.merchantIV)
-    }
-    
-    /// The URL to used to fetch payment token
-    private var checkoutUrl: String {
-        return hesabeURL + "/checkout"
-    }
-    
-    /// The URL to used to load payment Gateway
-    private var paymentUrl: String {
-        return hesabeURL + "/payment?data="
+        return ["accessCode": ACCESS_CODE]
     }
     
     /// The view to load the payment gateway
@@ -61,7 +40,7 @@ extension HesabeGatewayVC {
         let paymentRequestJson = try! JSONEncoder().encode(paymentRequest)
         guard let paymentRequestEncrypted = AES?.encrypt(data: paymentRequestJson) else { return }
         let parameters = ["data": paymentRequestEncrypted]
-        Alamofire.request(URL(string:checkoutUrl)!, method: .post, parameters: parameters, headers: headers).responseString { response in
+        Alamofire.request(URL(string:CHECKOUT_URL)!, method: .post, parameters: parameters, headers: headers).responseString { response in
             switch response.result {
             case .success:
                 guard let encryptedResponse = response.result.value else { return }
@@ -84,7 +63,7 @@ extension HesabeGatewayVC {
     
     /// Redirect to payment gateway to complete the process
     func redirectToPayment(with token: String) {
-        let url = paymentUrl + token
+        let url = PAYMENT_URL + token
         let request = URLRequest(url: URL(string: url)!)
         self.webView.load(request);
     }
@@ -116,7 +95,7 @@ extension HesabeGatewayVC: WKNavigationDelegate, WKUIDelegate {
         }
         
         /// Process the response after the transaction is complete. To use this method, make sure your SuccessUrl or FailureUrl points to this method in which you'll receive a "data" paramas a GET request. Then you can process it accordingly.
-        if url.absoluteString.contains("\(paymentRequest!.responseUrl)/?data") {
+        if url.absoluteString.contains("\(RESPONSE_URL)/?data") || url.absoluteString.contains("\(FAILURE_URL)/?data") {
             decisionHandler(.cancel)
             let urlComponents = url.absoluteString.components(separatedBy: "=")
             let encryptedResponse = urlComponents[1]
@@ -131,9 +110,14 @@ extension HesabeGatewayVC: WKNavigationDelegate, WKUIDelegate {
     func paymentResponse(response encryptedResponse: String) {
         let decryptedResponse = AES?.decrypt(data: encryptedResponse)
         guard let responseJson = decryptedResponse?.data(using: .utf8) else { return }
-        let paymentResponse = (try? JSONDecoder().decode(PaymentResponse.self, from: responseJson))!
+        var paymentResponse = try? JSONDecoder().decode(PaymentResponse.self, from: responseJson)
+        if (paymentResponse == nil ) {
+            let newResponseString = decryptedResponse?.components(separatedBy: "}}").first?.appending("}}")
+            guard let responseJson = newResponseString?.data(using: .utf8) else { return }
+            paymentResponse = try? JSONDecoder().decode(PaymentResponse.self, from: responseJson)
+        }
         self.dismiss(animated: true) {
-            self.delegate?.paymentResponse(response: paymentResponse)
+            self.delegate?.paymentResponse(response: paymentResponse!)
         }
     }
 }
