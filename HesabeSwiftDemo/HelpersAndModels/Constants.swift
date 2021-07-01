@@ -14,10 +14,10 @@ let CHECKOUT_URL = "https://sandbox.hesabe.com/checkout"
 let PAYMENT_URL = "https://sandbox.hesabe.com/payment?data="
 
 // Get below values from Merchant Panel, Profile section
-let ACCESS_CODE = "2a3789f5-edd1-416d-a472-4357794d6a8c"
-let MERCHANT_KEY = "OGzgrmqyDEnlALQRNvzPv8NJ4BwWM019"
-let MERCHANT_IV = "DEnlALQRNvzPv8NJ"
-let MERCHANT_CODE = "1351719857300"
+let ACCESS_CODE = "c333729b-d060-4b74-a49d-7686a8353481"
+let MERCHANT_KEY = "PkW64zMe5NVdrlPVNnjo2Jy9nOb7v1Xg"
+let MERCHANT_IV = "5NVdrlPVNnjo2Jy9"
+let MERCHANT_CODE = "842217"
 
 // This URL are defined by you to get the response from Payment Gateway
 let RESPONSE_URL = "http://success.hesbstaging.com"

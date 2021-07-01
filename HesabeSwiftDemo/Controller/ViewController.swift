@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     
     @IBAction func payClick(_ sender: UIButton) {
         statusLabel.text = ""
-        var paymentRequest = PaymentRequest(amount: "1")
+        var paymentRequest = PaymentRequest(amount: "6.62")
         paymentRequest?.orderReferenceNumber = "12XXXXXX" // optional
         self.presentHesabeGateway(paymentRequest: paymentRequest!)
     }
