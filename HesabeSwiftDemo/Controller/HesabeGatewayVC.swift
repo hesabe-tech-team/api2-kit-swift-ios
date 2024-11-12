@@ -106,20 +106,57 @@ extension HesabeGatewayVC: WKNavigationDelegate, WKUIDelegate {
         }
     }
     
-    /// Updates Payment response post completion
     func paymentResponse(response encryptedResponse: String) {
-        let decryptedResponse = AES?.decrypt(data: encryptedResponse)
-        guard let responseJson = decryptedResponse?.data(using: .utf8) else { return }
-        var paymentResponse = try? JSONDecoder().decode(PaymentResponse.self, from: responseJson)
-        if (paymentResponse == nil ) {
-            let newResponseString = decryptedResponse?.components(separatedBy: "}}").first?.appending("}}")
-            guard let responseJson = newResponseString?.data(using: .utf8) else { return }
-            paymentResponse = try? JSONDecoder().decode(PaymentResponse.self, from: responseJson)
+        // Decrypt the response safely
+        guard let decryptedResponse = AES?.decrypt(data: encryptedResponse) else {
+            print("Decryption failed.")
+            return
         }
-        self.dismiss(animated: true) {
-            self.delegate?.paymentResponse(response: paymentResponse!)
+        
+        // Clean the decrypted response string (optional, depending on your JSON format)
+        var cleanResponse = decryptedResponse
+        cleanResponse = cleanResponse.replacingOccurrences(of: ":null", with: ":\"null\"")
+        cleanResponse = cleanResponse.replacingOccurrences(of: "null,", with: "\"null\",")
+        
+        // Convert the cleaned response to Data
+        guard let responseData = cleanResponse.data(using: .utf8) else {
+            return
+        }
+
+        do {
+            // Attempt to decode the response into a PaymentResponse object
+            let paymentResponse = try JSONDecoder().decode(PaymentResponse.self, from: responseData)
+            
+            // Successfully decoded the payment response
+            self.dismiss(animated: true) {
+                self.delegate?.paymentResponse(response: paymentResponse)
+            }
+
+        } catch {
+            // Handle error during decoding
+            
+            // If the first decoding attempt failed, try cleaning the string further and decoding again
+            let newResponseString = decryptedResponse.components(separatedBy: "}}").first?.appending("}}")
+            guard let newResponseData = newResponseString?.data(using: .utf8) else {
+                return
+            }
+            
+            do {
+                let paymentResponse = try JSONDecoder().decode(PaymentResponse.self, from: newResponseData)
+                self.dismiss(animated: true) {
+                    self.delegate?.paymentResponse(response: paymentResponse)
+                }
+            } catch {
+                // If the second attempt also fails, log the error and return
+                print("Error decoding response on second attempt: \(error)")
+            }
         }
     }
+
+
+
+
+
 }
 
 // MARK: - Protocol and Delegate
