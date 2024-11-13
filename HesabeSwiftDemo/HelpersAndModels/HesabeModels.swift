@@ -9,7 +9,6 @@
 import Foundation
 
 struct PaymentRequest: Codable {
-    
     private var merchantCode: String
     private var responseUrl: String
     private var failureUrl: String
@@ -23,17 +22,21 @@ struct PaymentRequest: Codable {
     var variable4: String?
     var variable5: String?
     var subscription: String?
-
+    var paymentId: String?
+    var name: String?
+    var mobile_number: String?
+    var email: String?
     
-    init?(amount: String, payment type: String = "0") {
+
+    // Updated initializer to handle subscription logic
+    init?(amount: String, paymentType: String = "0", isSubscription: Bool = false, name: String? = nil, mobileNumber: String? = nil, email: String? = nil) {
         
-        guard !MERCHANT_CODE.isEmpty && MERCHANT_CODE.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil else
-        {
+        guard !MERCHANT_CODE.isEmpty && MERCHANT_CODE.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil else {
             debugPrint("Hesabe Error: Failed to set merchant code.")
             return nil
         }
         
-        guard !type.isEmpty && type.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil && type >= "0" && type <= "2" else {
+        guard !paymentType.isEmpty && paymentType.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil && paymentType >= "0" && paymentType <= "2" else {
             debugPrint("Hesabe Error: Failed to set payment type")
             return nil
         }
@@ -43,18 +46,37 @@ struct PaymentRequest: Codable {
             return nil
         }
         
+        // Set common fields
         self.merchantCode = MERCHANT_CODE
         self.responseUrl  = RESPONSE_URL
         self.failureUrl  = FAILURE_URL
         self.amount = amount
-        self.paymentType  = type
-        self.subscription = "0"
+        self.paymentType  = paymentType
+        
+        // Subscription logic
+        if isSubscription {
+            self.subscription = "1"
+            self.paymentId = "15"
+            self.name = name
+            self.mobile_number = mobileNumber
+            self.email = email
+            self.paymentType = "15"
+            self.amount = "0"
+        } else {
+            self.subscription = "0"
+            self.paymentId = nil
+            self.name = nil
+            self.mobile_number = nil
+            self.email = nil
+           
+        }
     }
-    
+
     enum CodingKeys: String, CodingKey {
-        case merchantCode, amount, responseUrl, orderReferenceNumber, variable1, variable2, variable3, variable4, variable5, paymentType, version, failureUrl, subscription
+        case merchantCode, amount, responseUrl, orderReferenceNumber, variable1, variable2, variable3, variable4, variable5, paymentType, version, failureUrl, subscription, paymentId, name, mobile_number, email
     }
 }
+
 
 struct PaymentToken: Codable {
     var status: Bool
