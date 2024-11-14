@@ -37,71 +37,58 @@ extension HesabeGatewayVC {
     
     /// Create request for Payment Token
     func checkout(paymentRequest: PaymentRequest) {
-        print("Checkout started")
-        
-        // Encode the paymentRequest to JSON
+
         let paymentRequestJson: Data
+        
         do {
             paymentRequestJson = try JSONEncoder().encode(paymentRequest)
-            print("Payment Request JSON: \(String(data: paymentRequestJson, encoding: .utf8) ?? "Invalid JSON")")
+            
         } catch {
-            print("Failed to encode payment request: \(error.localizedDescription)")
+            debugPrint("Failed to encode payment request: \(error.localizedDescription)")
             return
         }
         
         // Encrypt the paymentRequest JSON
         guard let paymentRequestEncrypted = AES?.encrypt(data: paymentRequestJson) else {
-            print("Encryption failed")
+            debugPrint("Encryption failed")
             return
         }
         
-        // Log the encrypted data (be cautious with logging sensitive information)
-        print("Encrypted Payment Request: \(paymentRequestEncrypted)")
-
         // Set up parameters for the request
         let parameters = ["data": paymentRequestEncrypted]
-        print("Request Parameters: \(parameters)")
 
         // Make the Alamofire request
         Alamofire.request(URL(string: CHECKOUT_URL)!, method: .post, parameters: parameters, headers: headers).responseString { response in
-            
-            // Log the full response for debugging
-            print("Response received:")
-            print("Response Status Code: \(response.response?.statusCode ?? -1)") // Log status code
-            print("Response Headers: \(String(describing: response.response?.allHeaderFields))") // Log headers
             
             switch response.result {
             case .success:
                 // Log the successful response
                 guard let encryptedResponse = response.result.value else {
-                    print("No response data received")
+                    debugPrint("No response data received")
                     return
                 }
-                
-                // Log the encrypted response (this will need decryption to be useful)
-                print("Encrypted Response: \(encryptedResponse)")
-                
+                                
                 // Handle the response by passing it to checkoutResponse
                 self.checkoutResponse(response: encryptedResponse)
                 
             case .failure(let error):
                 // Log the error details
-                print("Request failed with error: \(error.localizedDescription)")
+                debugPrint("Request failed with error: \(error.localizedDescription)")
                 
                 // Check if the error is an AFError (Alamofire specific error)
                 if let afError = error as? AFError {
                     // Log the underlying error if available
                     if let underlyingError = afError.underlyingError {
-                        print("Underlying error: \(underlyingError.localizedDescription)")
+                        debugPrint("Underlying error: \(underlyingError.localizedDescription)")
                     }
                 } else if let nsError = error as? NSError {
                     // Log the underlying error in case it's an NSError
                     if let underlyingError = nsError.userInfo[NSUnderlyingErrorKey] as? NSError {
-                        print("Underlying error: \(underlyingError.localizedDescription)")
+                        debugPrint("Underlying error: \(underlyingError.localizedDescription)")
                     }
                 } else {
                     // If the error is not an AFError or NSError, just log it
-                    print("Unknown error type: \(error)")
+                    debugPrint("Unknown error type: \(error)")
                 }
             }
         }
@@ -165,7 +152,7 @@ extension HesabeGatewayVC: WKNavigationDelegate, WKUIDelegate {
     func paymentResponse(response encryptedResponse: String) {
         // Decrypt the response safely
         guard let decryptedResponse = AES?.decrypt(data: encryptedResponse) else {
-            print("Decryption failed.")
+            debugPrint("Decryption failed.")
             return
         }
         
@@ -204,14 +191,10 @@ extension HesabeGatewayVC: WKNavigationDelegate, WKUIDelegate {
                 }
             } catch {
                 // If the second attempt also fails, log the error and return
-                print("Error decoding response on second attempt: \(error)")
+                debugPrint("Error decoding response on second attempt: \(error)")
             }
         }
     }
-
-
-
-
 
 }
 

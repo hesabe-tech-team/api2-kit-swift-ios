@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         statusLabel.text = ""
         
         // Determine if it's a subscription request or an individual payment.
-        let isSubscription = false // Change this based on your business logic.
+        let isSubscription = true // Change this based on your business logic.
         
         // Individual payment request
         var paymentRequest: PaymentRequest?
@@ -29,7 +29,6 @@ class ViewController: UIViewController {
         if isSubscription {
             // Subscription request - pass necessary subscription details
             paymentRequest = PaymentRequest(amount: "6.62", paymentType: "0", isSubscription: true, name: "John Doe", mobileNumber: "98076104", email: "bcelebi@hesabe.com")
-            dump(paymentRequest)
         } else {
             // Individual payment request - no subscription, no extra details
             paymentRequest = PaymentRequest(amount: "6.62", paymentType: "0", isSubscription: false) // Pass `isSubscription` here
@@ -38,7 +37,7 @@ class ViewController: UIViewController {
         
         // Use guard to safely unwrap the paymentRequest and make it mutable
         guard var validPaymentRequest = paymentRequest else {
-            print("Failed to create a valid PaymentRequest")
+            debugPrint("Failed to create a valid PaymentRequest")
             return
         }
         
