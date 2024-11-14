@@ -10,8 +10,8 @@ import Foundation
 
 // Get these URL from `https://developer.hesabe.com/` -> Environments
 // Replace `https://sandbox.hesabe.com` with Test URL or Production URL.
-let CHECKOUT_URL = "https://sandbox.hesabe.com/checkout"
-let PAYMENT_URL = "https://sandbox.hesabe.com/payment?data="
+let CHECKOUT_URL = "https://dev-paymentapi.hesabe.com/checkout"
+let PAYMENT_URL = "https://dev-paymentapi.hesabe.com/payment?data="
 
 // Get below values from Merchant Panel, Profile section
 let ACCESS_CODE = "c333729b-d060-4b74-a49d-7686a8353481"

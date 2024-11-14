@@ -61,7 +61,7 @@ struct PaymentRequest: Codable {
             self.mobile_number = mobileNumber
             self.email = email
             self.paymentType = "15"
-            self.amount = "0"
+            self.amount = "0"   
         } else {
             self.subscription = "0"
             self.paymentId = nil

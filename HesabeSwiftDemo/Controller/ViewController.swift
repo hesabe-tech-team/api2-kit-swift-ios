@@ -19,10 +19,36 @@ class ViewController: UIViewController {
     
     @IBAction func payClick(_ sender: UIButton) {
         statusLabel.text = ""
-        var paymentRequest = PaymentRequest(amount: "6.62")
-        paymentRequest?.orderReferenceNumber = "12XXXXXX" // optional
-        self.presentHesabeGateway(paymentRequest: paymentRequest!)
-    }
+        
+        // Determine if it's a subscription request or an individual payment.
+        let isSubscription = false // Change this based on your business logic.
+        
+        // Individual payment request
+        var paymentRequest: PaymentRequest?
+        
+        if isSubscription {
+            // Subscription request - pass necessary subscription details
+            paymentRequest = PaymentRequest(amount: "6.62", paymentType: "0", isSubscription: true, name: "John Doe", mobileNumber: "98076104", email: "bcelebi@hesabe.com")
+            dump(paymentRequest)
+        } else {
+            // Individual payment request - no subscription, no extra details
+            paymentRequest = PaymentRequest(amount: "6.62", paymentType: "0", isSubscription: false) // Pass `isSubscription` here
+        }
+        
+        
+        // Use guard to safely unwrap the paymentRequest and make it mutable
+        guard var validPaymentRequest = paymentRequest else {
+            print("Failed to create a valid PaymentRequest")
+            return
+        }
+        
+        // Now you can modify the properties of validPaymentRequest
+        validPaymentRequest.orderReferenceNumber = "12XXXXXX" // Optional field for both types of requests
+        
+        // Present the payment gateway with the prepared payment request
+        self.presentHesabeGateway(paymentRequest: validPaymentRequest)
+        }
+
     
     func presentHesabeGateway(paymentRequest: PaymentRequest) {
         let vc = HesabeGatewayVC()
