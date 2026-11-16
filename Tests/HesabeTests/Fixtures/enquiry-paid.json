@@ -1,0 +1,27 @@
+{
+  "status": true,
+  "message": "Transaction found",
+  "data": {
+    "data": [
+      {
+        "token": "84221700000000000000000000001",
+        "amount": "25.000",
+        "reference_number": "ORDER-1001",
+        "status": "SUCCESSFUL",
+        "TransactionID": "600000000000001",
+        "Id": 100001,
+        "PaymentID": "100000000000000001",
+        "Terminal": "000001",
+        "TrackID": "300001",
+        "payment_type": "KNET",
+        "service_type": "Payment Gateway",
+        "customerName": "Test Customer",
+        "customerEmail": "customer@example.com",
+        "customerMobile": "96500000000",
+        "customerCardType": "-NA-",
+        "customerCard": "-NA-",
+        "datetime": "2026-11-12 10:20:16"
+      }
+    ]
+  }
+}
