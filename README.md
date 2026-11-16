@@ -7,12 +7,13 @@ payment ended, and returns that to your app.
 Your merchant keys stay on your server. The app holds the session's `data` string, which
 opens one payment and cannot create another. The SDK does no encryption.
 
-`Sources/` is the Swift package. [`web/apple-pay.html`](web/apple-pay.html) is the page
-behind the Apple Pay button.
+`Sources/` is the Swift package. [`demo/`](demo) is a complete app with the small server
+it talks to. [`web/apple-pay.html`](web/apple-pay.html) is the page behind the Apple Pay
+button.
 
-Status, November 2026: every Hesabe call the SDK makes was run against the sandbox. The
-package is compiled and unit tested by GitHub Actions. It has not been run on a device
-yet.
+Status, November 2026: every Hesabe call the SDK makes was run against the sandbox, and
+so was the demo server. The package and the demo app are compiled, and the package unit
+tested, by GitHub Actions. Neither has been run on a simulator or a device yet.
 
 ## What you need before starting
 
@@ -175,6 +176,30 @@ let settled = await HesabeClient(environment: .sandbox).recoverPayments()
 ```
 
 It returns the payments that have since been paid or failed.
+
+## Run the demo
+
+The demo is the integration above as a complete app: one product, a quantity, the
+checkout sheet three ways, and the Apple Pay button. It runs against the sandbox with
+Hesabe's published test keys.
+
+```bash
+cd demo/server
+npm install
+npm start
+```
+
+Then open `demo/HesabeDemo.xcodeproj` in Xcode and run it on a simulator.
+
+- The server holds the keys and the price. The app sends a quantity and receives a
+  session.
+- After a payment the app shows two lines: what the SDK learned from Hesabe, and what the
+  server learned by asking Hesabe itself. Only the second may release an order.
+- Everything you change is in `demo/HesabeDemo/Config.swift` and, for the keys, in the
+  server's environment (`HESABE_MERCHANT_CODE`, `HESABE_ACCESS_CODE`, `HESABE_SECRET_KEY`,
+  `HESABE_IV_KEY`, `HESABE_ENVIRONMENT`).
+- On an iPhone, set `Config.backend` to the Mac's address on the network. The simulator
+  uses `localhost`.
 
 ## How the SDK works
 
