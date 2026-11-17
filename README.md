@@ -14,12 +14,11 @@ button.
 
 Status, November 2026: every Hesabe call the SDK makes was run against the sandbox, and
 so was the demo server. The package and the demo app are compiled, and the package unit
-tested, by GitHub Actions. The demo took a sandbox KNET payment on an iOS simulator, from
-the KNET button to the paid result. The card form was run on the sandbox in a desktop
-browser presenting itself as an iPhone web view: a payment, a payment that saves the card,
-a card saved without a charge, and a declined card. The card form inside the SDK, the
-method list and the Apple Pay button have not been run yet, and nothing has been run on
-an iPhone.
+tested, by GitHub Actions. The demo ran on an iOS simulator against the sandbox: a KNET
+payment, a card payment in the card form with 3-D Secure, a payment that saves the card,
+a card saved without a charge, a charge on a saved card, and removing a card. A declined
+card was run in the card form in a desktop browser presenting itself as an iPhone web
+view. The Apple Pay button has not been run yet, and nothing has been run on an iPhone.
 
 ## What you need before starting
 
