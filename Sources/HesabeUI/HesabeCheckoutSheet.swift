@@ -52,7 +52,9 @@ public final class HesabeCheckoutSheet {
         }
 
         // A session that only saves a card has one way through: the card form.
-        let offered = details.isCardVerification ? [] : methods.filter(details.paymentMethods.contains)
+        let offered = details.isCardVerification
+            ? []
+            : methods.filter { details.paymentMethods.contains($0) && !$0.isGooglePay }
         if !details.isCardVerification, !methods.isEmpty, offered.isEmpty {
             return .notStarted(.configuration("none of the requested payment methods is enabled for this session"))
         }

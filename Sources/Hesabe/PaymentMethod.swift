@@ -25,12 +25,15 @@ public struct PaymentMethod: RawRepresentable, Sendable, Hashable, Codable,
     public static let applePayKNETCredit: PaymentMethod = 12
     public static let applePayKNETInternational: PaymentMethod = 13
     public static let applePayAmex: PaymentMethod = 14
-    public static let googlePay: PaymentMethod = 16
     public static let deema: PaymentMethod = 18
     public static let samsungPay: PaymentMethod = 20
 
     /// True for the six Apple Pay types, 9 to 14.
     public var isApplePay: Bool { (9...14).contains(rawValue) }
+
+    /// True for Google Pay, type 16. It is not part of the iOS SDK, so the method list
+    /// never offers it, even when the account has it enabled.
+    public var isGooglePay: Bool { rawValue == 16 }
 
     /// The name shown in the method list.
     public var displayName: String {
@@ -42,7 +45,6 @@ public struct PaymentMethod: RawRepresentable, Sendable, Hashable, Codable,
         case 11, 12: "Apple Pay (KNET)"
         case 13: "Apple Pay (international cards)"
         case 14: "Apple Pay (American Express)"
-        case 16: "Google Pay"
         case 18: "Deema"
         case 20: "Samsung Pay"
         default: "Payment method \(rawValue)"

@@ -120,7 +120,8 @@ In SwiftUI:
 | none | Hesabe's own page with every enabled method. |
 
 A payment method is Hesabe's payment type id: `.knet` is 1, `.card` is 2 (MPGS), `.amex`
-is 7, `.googlePay` is 16. Any other id works as `PaymentMethod(rawValue: 18)`.
+is 7. Any other id works as `PaymentMethod(rawValue: 18)`. Google Pay, type 16, is not
+part of the iOS SDK: the method list never offers it.
 
 The card form is Hesabe's page at `pay/webview`, shown in the sheet under your app's own
 title bar. The card number is typed into Hesabe's page and sent by it to Hesabe: it never
