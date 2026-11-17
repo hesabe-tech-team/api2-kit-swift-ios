@@ -59,6 +59,21 @@ public struct HesabeClient: Sendable {
         return endpoint("payment", query: query)
     }
 
+    /// The address of Hesabe's embedded card form for a session: the card fields and
+    /// the pay button, served by Hesabe, with 3-D Secure inside the same page.
+    ///
+    /// Hesabe serves it to in-app web views only. A browser, and an iPad web view that
+    /// asks for desktop pages, get HTTP 403 (sandbox, November 2026).
+    ///
+    /// - Parameter language: `ar` for Arabic. Anything else is English.
+    public func cardFormURL(for session: HesabeSession, language: String? = nil) -> URL {
+        var query = [URLQueryItem(name: "data", value: session.data)]
+        if let language {
+            query.append(URLQueryItem(name: "locale", value: language.hasPrefix("ar") ? "ar" : "en"))
+        }
+        return endpoint("pay/webview", query: query)
+    }
+
     // MARK: - Outcome
 
     /// Every attempt Hesabe recorded for a session token. Empty when it has none, which
@@ -98,6 +113,7 @@ public struct HesabeClient: Sendable {
             do {
                 let attempts = try await transactions(token: token)
                 if let paid = attempts.first(where: \.isPaid) { return .paid(paid) }
+                if let saved = attempts.first(where: \.isCardSaved) { return .cardSaved(saved) }
                 if let failed = attempts.first(where: \.isFailed) { return .failed(failed) }
                 unsettled = attempts.first ?? unsettled
                 lastError = .noTransaction
@@ -117,14 +133,14 @@ public struct HesabeClient: Sendable {
 
     /// Settles payments this device started and never saw the end of: the app was
     /// closed during 3-D Secure, or the customer never came back from a banking app.
-    /// Call it at launch. Each payment is reported once it is paid or failed.
+    /// Call it at launch. Each payment is reported once it is paid, saved or failed.
     public func recoverPayments(in store: UserDefaults = .standard) async -> [PaymentResult] {
         HesabePendingPayments.prune(in: store)
         var settled: [PaymentResult] = []
         for pending in HesabePendingPayments.all(in: store) where pending.environment == environment {
             let result = await settle(token: pending.token, afterReturn: false)
             switch result {
-            case .paid, .failed:
+            case .paid, .cardSaved, .failed:
                 HesabePendingPayments.resolve(pending.token, in: store)
                 settled.append(result)
             case .pending, .canceled, .unconfirmed, .notStarted:

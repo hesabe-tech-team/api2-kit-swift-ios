@@ -7,6 +7,9 @@ import UIKit
 ///
 ///     let sheet = HesabeCheckoutSheet(configuration: configuration)
 ///     let result = await sheet.present(session, methods: [.knet, .card], from: self)
+///
+/// Cards are entered in Hesabe's embedded card form inside the sheet. A session with
+/// amount `0.000` and a customer shows the same form to save a card without a charge.
 @MainActor
 public final class HesabeCheckoutSheet {
     private let configuration: HesabeConfiguration
@@ -26,7 +29,8 @@ public final class HesabeCheckoutSheet {
     ///     except `.notStarted`, pay again with a new one.
     ///   - methods: the payment methods to offer. One opens that method directly.
     ///     Several show a native list of those enabled for the session. None opens
-    ///     Hesabe's own page with every enabled method.
+    ///     Hesabe's own page with every enabled method. Ignored by a session that
+    ///     only saves a card.
     ///   - presenter: the view controller on screen.
     @discardableResult
     public func present(
@@ -47,8 +51,9 @@ public final class HesabeCheckoutSheet {
             return .notStarted(.connection(error.localizedDescription))
         }
 
-        let offered = methods.filter(details.paymentMethods.contains)
-        if !methods.isEmpty, offered.isEmpty {
+        // A session that only saves a card has one way through: the card form.
+        let offered = details.isCardVerification ? [] : methods.filter(details.paymentMethods.contains)
+        if !details.isCardVerification, !methods.isEmpty, offered.isEmpty {
             return .notStarted(.configuration("none of the requested payment methods is enabled for this session"))
         }
 
@@ -79,10 +84,18 @@ public final class HesabeCheckoutSheet {
         HesabePendingPayments.track(
             PendingPayment(token: details.token, environment: configuration.environment))
 
+        // Cards go to Hesabe's embedded form. Every other method, and a card type the
+        // form does not take for this session, goes to Hesabe's payment page.
+        let usesCardForm = details.isCardVerification
+            || (method.map(details.embeddedCardMethods.contains) ?? false)
         let page = PaymentWebViewController(
-            pageURL: client.paymentURL(for: session, method: method),
+            pageURL: usesCardForm
+                ? client.cardFormURL(for: session, language: strings.languageCode)
+                : client.paymentURL(for: session, method: method),
             returnURLs: configuration.returnURLs,
-            title: configuration.merchantDisplayName ?? method?.displayName,
+            title: details.isCardVerification
+                ? strings.addCard
+                : configuration.merchantDisplayName ?? method?.displayName,
             cancelTitle: strings.cancel)
         let outcome: PaymentWebViewController.Outcome = await withCheckedContinuation { continuation in
             page.onOutcome = { continuation.resume(returning: $0) }
@@ -108,7 +121,7 @@ public final class HesabeCheckoutSheet {
         }
 
         switch result {
-        case .paid, .failed, .canceled, .notStarted:
+        case .paid, .cardSaved, .failed, .canceled, .notStarted:
             HesabePendingPayments.resolve(details.token)
         case .pending, .unconfirmed:
             break // left for recoverPayments() at the next launch

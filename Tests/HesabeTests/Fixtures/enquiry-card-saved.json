@@ -1,0 +1,27 @@
+{
+  "status": true,
+  "message": "Transaction found",
+  "data": {
+    "data": [
+      {
+        "token": "84221700000000000000000000005",
+        "amount": "0.000",
+        "reference_number": "CARD-1001",
+        "status": "AUTHORIZED",
+        "TransactionID": "300005_1_PAY",
+        "Id": 100005,
+        "PaymentID": "600000000005",
+        "Terminal": "000001",
+        "TrackID": "300005",
+        "payment_type": "MPGS",
+        "service_type": "Payment Gateway",
+        "customerName": "Test Customer",
+        "customerEmail": "customer@example.com",
+        "customerMobile": "96500000000",
+        "customerCardType": "-NA-",
+        "customerCard": "-NA-",
+        "datetime": "2026-11-17 12:37:39"
+      }
+    ]
+  }
+}

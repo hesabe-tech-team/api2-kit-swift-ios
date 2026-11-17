@@ -20,6 +20,9 @@ final class PaymentWebViewController: UIViewController {
     private let returnURLs: ReturnURLs
     private let cancelTitle: String
     private var hasFinished = false
+    /// False until the first page has rendered. An HTTP error before that is Hesabe
+    /// refusing the session, not a step of the payment.
+    private var hasShownPage = false
 
     /// Called once, with how the flow ended.
     var onOutcome: ((Outcome) -> Void)?
@@ -29,6 +32,9 @@ final class PaymentWebViewController: UIViewController {
         // Card entry and gateway cookies must not outlive the payment inside the app.
         configuration.websiteDataStore = .nonPersistent()
         configuration.allowsInlineMediaPlayback = true
+        // An iPad web view asks for desktop pages by default, and Hesabe's card form
+        // answers those with HTTP 403: it is served to phone web views only.
+        configuration.defaultWebpagePreferences.preferredContentMode = .mobile
 
         // No user scripts and no evaluateJavaScript anywhere in this class: WebKit
         // switches Apple Pay off in a web view the app has injected script into.
@@ -36,6 +42,11 @@ final class PaymentWebViewController: UIViewController {
         view.navigationDelegate = self
         view.uiDelegate = self
         view.allowsBackForwardNavigationGestures = false
+        // Hesabe's card form has a transparent page around the fields, so the app's
+        // background shows through in light and dark mode.
+        view.isOpaque = false
+        view.backgroundColor = .systemBackground
+        view.scrollView.backgroundColor = .systemBackground
         return view
     }()
 
@@ -212,14 +223,18 @@ extension PaymentWebViewController: WKNavigationDelegate {
     func webView(
         _ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse
     ) async -> WKNavigationResponsePolicy {
-        guard navigationResponse.isForMainFrame, endIfReturn(navigationResponse.response.url) else {
-            return .allow
+        guard navigationResponse.isForMainFrame else { return .allow }
+        if endIfReturn(navigationResponse.response.url) { return .cancel }
+        if !hasShownPage, let http = navigationResponse.response as? HTTPURLResponse, http.statusCode >= 400 {
+            finish(.failed(.rejected("the payment page answered HTTP \(http.statusCode)")))
+            return .cancel
         }
-        return .cancel
+        return .allow
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         spinner.stopAnimating()
+        hasShownPage = true
         // A page that reached a return URL without either callback, by script.
         _ = endIfReturn(webView.url)
     }

@@ -57,6 +57,10 @@ final class HesabeTests: XCTestCase {
         XCTAssertTrue(details.paymentMethods.contains(.knet))
         XCTAssertTrue(details.paymentMethods.contains(.googlePay))
         XCTAssertEqual(details.applePayMethods, [9, 10, 11, 13])
+        XCTAssertEqual(details.embeddedCardMethods, [.card])
+        XCTAssertFalse(details.hasCustomer)
+        XCTAssertFalse(details.offersCardSaving)
+        XCTAssertFalse(details.isCardVerification)
 
         let url = await log.urls.first
         XCTAssertEqual(url?.absoluteString, "https://sandbox.hesabe.com/api/checkout-details?data=\(hex)")
@@ -73,6 +77,18 @@ final class HesabeTests: XCTestCase {
         }
     }
 
+    func testDetailsRecogniseASessionThatOnlySavesACard() async throws {
+        let answer = try fixture("checkout-details-verify")
+        let session = try HesabeSession(data: hex)
+        let details = try await client([(200, answer)]).details(for: session)
+
+        XCTAssertEqual(details.formattedAmount, "KWD 0.000")
+        XCTAssertTrue(details.hasCustomer)
+        XCTAssertTrue(details.offersCardSaving)
+        XCTAssertTrue(details.isCardVerification)
+        XCTAssertEqual(details.embeddedCardMethods, [.card])
+    }
+
     // MARK: - Payment page
 
     func testPaymentURLOpensHesabesPageOrOneMethod() throws {
@@ -84,6 +100,20 @@ final class HesabeTests: XCTestCase {
         XCTAssertEqual(
             client.paymentURL(for: session, method: .knet).absoluteString,
             "https://api.hesabe.com/payment?data=\(hex)&paymentType=1")
+    }
+
+    func testCardFormURLCarriesTheSessionAndTheLanguage() throws {
+        let client = HesabeClient(environment: .sandbox)
+        let session = try HesabeSession(data: hex)
+        XCTAssertEqual(
+            client.cardFormURL(for: session).absoluteString,
+            "https://sandbox.hesabe.com/pay/webview?data=\(hex)")
+        XCTAssertEqual(
+            client.cardFormURL(for: session, language: "ar-KW").absoluteString,
+            "https://sandbox.hesabe.com/pay/webview?data=\(hex)&locale=ar")
+        XCTAssertEqual(
+            client.cardFormURL(for: session, language: "fr").absoluteString,
+            "https://sandbox.hesabe.com/pay/webview?data=\(hex)&locale=en")
     }
 
     // MARK: - Outcome
@@ -149,6 +179,36 @@ final class HesabeTests: XCTestCase {
         let result = await client([(200, failed)]).settle(token: "8422171", afterReturn: true)
         guard case .failed(let transaction) = result else { return XCTFail("\(result)") }
         XCTAssertFalse(transaction.isPaid)
+    }
+
+    func testASavedCardIsNotReportedAsAPayment() async throws {
+        let saved = try fixture("enquiry-card-saved")
+        let result = await client([(200, saved)])
+            .settle(token: "84221700000000000000000000005", afterReturn: true)
+
+        guard case .cardSaved(let transaction) = result else { return XCTFail("\(result)") }
+        XCTAssertEqual(transaction.amount, "0.000")
+        XCTAssertEqual(transaction.status, "AUTHORIZED")
+        XCTAssertFalse(transaction.isPaid)
+    }
+
+    func testAnAuthorisationWithAnAmountIsNotASavedCard() async throws {
+        let held = Data(#"{"status":true,"data":{"data":[{"status":"AUTHORIZED","amount":"1.000","Id":8}]}}"#.utf8)
+        let result = await client([(200, held)]).settle(token: "8422172", afterReturn: true)
+        guard case .pending = result else { return XCTFail("\(result)") }
+    }
+
+    // MARK: - Saved cards
+
+    func testSavedCardsDecodeHesabesList() throws {
+        let list = try JSONDecoder().decode([String: [HesabeSavedCard]].self, from: try fixture("saved-cards"))
+        let cards = try XCTUnwrap(list["cards"])
+
+        XCTAssertEqual(cards.map(\.id), [2001, 2002])
+        XCTAssertEqual(cards[0].displayName, "Mastercard •••• 0008")
+        XCTAssertEqual(cards[0].expiry, "01/39")
+        XCTAssertEqual(cards[1].displayName, "Visa •••• 1019")
+        XCTAssertEqual(cards[1].nameOnCard, "Test Customer")
     }
 
     func testTheTokenCannotChangeThePath() async {

@@ -14,6 +14,18 @@ public struct CheckoutDetails: Sendable, Hashable, Decodable {
     public let paymentMethods: [PaymentMethod]
     /// The Apple Pay types among them, as Hesabe lists them for its Apple Pay script.
     public let applePayMethods: [PaymentMethod]
+    /// The card payment types Hesabe's embedded card form takes for this session:
+    /// `[2]` on the sandbox (November 2026). The SDK shows the form for these and
+    /// Hesabe's payment page for every other method.
+    public let embeddedCardMethods: [PaymentMethod]
+    /// True when your server put a Hesabe customer on the session (`customer_id`).
+    public let hasCustomer: Bool
+    /// True when the card form offers to save the card: `saveCard` with a customer.
+    public let offersCardSaving: Bool
+
+    /// True for a session that saves a card and charges nothing: amount `0.000` with a
+    /// customer. The card form then reads "Save Card" in place of "Pay".
+    public var isCardVerification: Bool { amount == 0 && hasCustomer }
 
     /// The amount as Hesabe writes it: the currency and three decimals, `KWD 1.000`.
     public var formattedAmount: String {
@@ -31,6 +43,7 @@ public struct CheckoutDetails: Sendable, Hashable, Decodable {
 
     private enum CodingKeys: String, CodingKey {
         case token, amount, currency, paymentTypeId, paymentMethods, applePay
+        case hasCustomer, merchantSaveCard, activeDirectGatewayIds
     }
 
     private struct ApplePayEntry: Decodable {
@@ -65,5 +78,9 @@ public struct CheckoutDetails: Sendable, Hashable, Decodable {
             .map(PaymentMethod.init(rawValue:)) ?? []
         applePayMethods = try container.decodeIfPresent([ApplePayEntry].self, forKey: .applePay)?
             .map { PaymentMethod(rawValue: $0.id) } ?? []
+        embeddedCardMethods = try container.decodeIfPresent([Int].self, forKey: .activeDirectGatewayIds)?
+            .map(PaymentMethod.init(rawValue:)) ?? []
+        hasCustomer = try container.decodeIfPresent(Bool.self, forKey: .hasCustomer) ?? false
+        offersCardSaving = try container.decodeIfPresent(Bool.self, forKey: .merchantSaveCard) ?? false
     }
 }

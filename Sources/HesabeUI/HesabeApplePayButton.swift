@@ -245,7 +245,7 @@ public struct HesabeApplePayButton: View {
         let result = await HesabeClient(environment: configuration.environment)
             .settle(token: token, afterReturn: true)
         switch result {
-        case .paid, .failed:
+        case .paid, .cardSaved, .failed:
             HesabePendingPayments.resolve(token)
         case .pending, .unconfirmed, .canceled, .notStarted:
             break // left for recoverPayments() at the next launch

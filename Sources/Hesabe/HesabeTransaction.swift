@@ -2,7 +2,8 @@ import Foundation
 
 /// A payment as Hesabe recorded it. Read from `api/transaction/enquire/<token>`.
 public struct HesabeTransaction: Sendable, Hashable, Decodable {
-    /// Hesabe's status word. `SUCCESSFUL` and `FAILED` are the two observed so far.
+    /// Hesabe's status word. Observed so far: `SUCCESSFUL`, `FAILED` (a declined card,
+    /// an abandoned 3-D Secure) and `AUTHORIZED` (a card saved without a charge).
     public let status: String
     public let token: String?
     /// The amount charged, with three decimals, as Hesabe writes it.
@@ -18,6 +19,16 @@ public struct HesabeTransaction: Sendable, Hashable, Decodable {
 
     /// True only when Hesabe says the money moved.
     public var isPaid: Bool { status.uppercased() == "SUCCESSFUL" }
+
+    /// True for a card verification that went through: the card is authenticated and
+    /// stored, and nothing was charged. Hesabe records it as `AUTHORIZED` with amount
+    /// `0.000` (sandbox, November 2026).
+    public var isCardSaved: Bool {
+        guard status.uppercased() == "AUTHORIZED", let amount,
+              let value = Decimal(string: amount, locale: Locale(identifier: "en_US_POSIX"))
+        else { return false }
+        return value == 0
+    }
 
     /// True when Hesabe recorded the attempt as over without a payment.
     public var isFailed: Bool {
@@ -62,6 +73,9 @@ public struct HesabeTransaction: Sendable, Hashable, Decodable {
 public enum PaymentResult: Sendable, Hashable {
     /// Hesabe confirms the payment.
     case paid(HesabeTransaction)
+    /// Hesabe authenticated the card and stored it for the session's customer. Nothing
+    /// was charged. Your server finds the card in its list of the customer's cards.
+    case cardSaved(HesabeTransaction)
     /// Hesabe recorded the attempt and it did not go through. Nothing was charged.
     case failed(HesabeTransaction)
     /// Hesabe has the payment and has not settled it. Do not charge again.

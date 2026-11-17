@@ -6,3 +6,4 @@ xcuserdata/
 DerivedData/
 build/
 node_modules/
+demo/server/.customer.json
