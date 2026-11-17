@@ -1,0 +1,22 @@
+{
+  "cards": [
+    {
+      "card_id": 2001,
+      "card_number": "****0008",
+      "expiry_month": "01",
+      "expiry_year": "39",
+      "brand": "MASTERCARD",
+      "name_on_card": "Test Customer",
+      "payment_type_id": 2
+    },
+    {
+      "card_id": "2002",
+      "card_number": "****1019",
+      "expiry_month": "01",
+      "expiry_year": "39",
+      "brand": "VISA",
+      "name_on_card": "Test Customer",
+      "payment_type_id": 2
+    }
+  ]
+}

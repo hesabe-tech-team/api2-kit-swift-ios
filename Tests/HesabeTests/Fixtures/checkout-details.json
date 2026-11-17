@@ -1,0 +1,22 @@
+{
+  "status": true,
+  "message": "Checkout details retrieved successfully",
+  "response": {
+    "paymentTypeId": "0",
+    "token": "84221700000000000000000000002",
+    "amount": 1,
+    "currency": "KWD",
+    "merchantCode": "842217",
+    "paymentMethods": [1, 2, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 18, 19, 20, 22],
+    "hasCustomer": false,
+    "merchantSaveCard": false,
+    "applePay": [
+      { "id": 9, "merchantIdentifier": "merchant.hesabe.pay", "currency": "KWD", "supportedNetworks": ["visa", "masterCard"], "merchantCapabilities": ["supports3DS"] },
+      { "id": 10, "merchantIdentifier": "merchant.hesabe.dec", "currency": "KWD", "supportedNetworks": ["visa", "masterCard"], "merchantCapabilities": ["supports3DS"] },
+      { "id": 11, "merchantIdentifier": "merchant.kib.applepay", "currency": "KWD", "supportedNetworks": ["visa", "masterCard"], "merchantCapabilities": ["supports3DS", "supportsDebit"], "supportedCountries": ["KW"] },
+      { "id": 13, "merchantIdentifier": "merchant.kib.applepay", "currency": "KWD", "supportedNetworks": ["visa", "masterCard"], "merchantCapabilities": ["supports3DS"] }
+    ],
+    "googlePay": { "gatewayMerchantId": "900120301", "gateway": "mpgs", "paymentId": 16, "networks": "AMEX,MASTERCARD,VISA", "methods": "PAN_ONLY,CRYPTOGRAM_3DS", "env": "TEST" },
+    "activeDirectGatewayIds": [2]
+  }
+}
